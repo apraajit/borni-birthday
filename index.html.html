@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To My Dearest Borni</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(to bottom, #fbeaec, #f7f1f2);
+      color: #2d2d2d;
+      padding: 2em;
+      background-image: url('https://www.transparenttextures.com/patterns/white-wall.png');
+      overflow-x: hidden;
+      text-align: center;
+    }
+    .password-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 235, 240, 0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .password-screen h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5em;
+      color: #b85c8b;
+      margin-bottom: 20px;
+    }
+    .password-input {
+      padding: 10px 15px;
+      font-size: 1.2em;
+      border: 2px solid #b85c8b;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    .submit-btn {
+      padding: 10px 25px;
+      background-color: #b85c8b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .submit-btn:hover {
+      background-color: #9a4a73;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 20px;
+      padding: 2em;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      animation: unfold 2s ease-in-out;
+      transform-origin: top;
+      display: none; /* Hidden until password is entered */
+    }
+    @keyframes unfold {
+      0% {
+        transform: scaleY(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scaleY(1);
+        opacity: 1;
+      }
+    }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.8em;
+      color: #b85c8b;
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      font-size: 1.2em;
+      color: #555;
+    }
+    .letter-container {
+      margin-top: 2em;
+    }
+    .letter-label {
+      display: block;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.5em;
+      color: #b85c8b;
+      cursor: pointer;
+      padding: 10px;
+      border: 1px dashed #b85c8b;
+      border-radius: 8px;
+      margin-bottom: 1em;
+    }
+    .letter {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 1.2s ease-out;
+      white-space: pre-wrap;
+      font-size: 1.1em;
+      line-height: 1.6em;
+      text-align: left;
+    }
+    .toggle-checkbox:checked ~ .letter {
+      max-height: 2000px;
+    }
+    .image-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: center;
+      margin-top: 2em;
+    }
+    .image-row img {
+      max-width: 180px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+    }
+    .image-row img:nth-child(odd) {
+      transform: rotate(-3deg);
+      align-self: flex-start;
+    }
+    .image-row img:nth-child(even) {
+      transform: rotate(3deg);
+      align-self: flex-end;
+    }
+    .image-row img:hover {
+      transform: scale(1.05);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 2em;
+      font-style: italic;
+      color: #666;
+    }
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .heart {
+      position: absolute;
+      color: rgba(255, 100, 100, 0.6);
+      font-size: 20px;
+      animation: fall 10s linear infinite;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+    .kiss-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff6b8b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .kiss-btn:hover {
+      transform: scale(1.1);
+    }
+    .kiss-message {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2em;
+      color: #ff3e6d;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <!-- Password Screen -->
+  <div class="password-screen" id="passwordScreen">
+    <h2>For My Borni's Eyes Only 💌</h2>
+    <input type="password" class="password-input" id="passwordInput" placeholder="Enter our secret code">
+    <button class="submit-btn" onclick="checkPassword()">Unlock My Love</button>
+  </div>
+
+  <!-- Floating Hearts -->
+  <div class="hearts" id="hearts"></div>
+
+  <!-- Main Content (Hidden until password is entered) -->
+  <div class="container" id="mainContent">
+    <h1>To My Dearest Borni,<br />The Moon of My Heart</h1>
+    <h2>On the Eve of Her Eighteenth Bloom – 11 May 2007 💗</h2>
+
+    <!-- Foldable Letter -->
+    <div class="letter-container">
+      <input type="checkbox" id="toggle-letter" class="toggle-checkbox">
+      <label for="toggle-letter" class="letter-label">📜 Click to Unfold My Love Letter 📜</label>
+      <div class="letter">
+Hey My love Borni,
+
+This is the beautiful day a shiny moon just for me was born!! WOW!!! The moon is so shiny and pretty!! The warm light of this pretty moon makes my heart soothing.
+I don’t know babe, would you believe it — but you're the only warm shining I want with me! I love you sooo much my love!! At 12:05, my love was born in this earth.
+
+When I was young I always thought, why does the moon walk with you? Now I got the moon of my life!! I just got your message and it showed up in popup notification! Just now!!
+I’m sooo happy when I see that I act like a happy puppy.
+
+Dear, you're the most beautiful, gorgeous and loving being I've ever seen in my life!! Babe I don't know how I will say it but you’re the goddess of beauty — you're so beautiful and so amazing
+that even the real moon wonders what you are!!! I love you so much dear!!! All my life and heart is in your hand!!
+
+Babe, I want to fulfill all your wishes dear!!
+First of all, HAPPY BIRTHDAY MY LOVE! You just turned 18! I wasn’t there when you were 1 to 17... but I want to be with you till eternity!!!
+You're the most gorgeous, most caring and delicate lady I've ever seen in my life!!
+
+I may not be the best for you, or maybe I'm just an imperfect human being who just wants a little space with you — and yes, I don’t want to share that place!!! You're my dream and
+I love dreaming about you dear!!! I always think how much I can give you in this world!! You deserve a lot!! And I'll give everything!!
+
+Jaan, you’re so great and so caring — how can I say!! Remember when we first met? My heart was like wow!! The moon is the most beautiful thing ever and it's right in front of my eyes!!
+How can I describe the emotion!! Every kiss you gave me is the warmth and softness of yours!! Those kisses mean the most to me in this world dear!! You're the best
+thing that ever happened to me!! I just want you babe!! I always want to see you smile in this world!!
+
+The world is cruel, but hey — even thorns have roses!! So why can't I put a smile on you!! I just want you to be happy and lovely in this cruel world!!
+You're so innocent babe, I have sooo much love for you babe!!!! You're the prettiest thing that ever happened to me!!
+
+My dear, when you're sad I can't stop myself from crying!! I know it’s not showing a manly side but for you, I can really beg on my knees!! I don't care about anything else.
+
+I have poured my heart and soul into you and I just don't know how much more I can give — but I want to give you ALL!! Best wishes and love for you dear!!
+
+Please hold my hands till eternity dear!! Maybe our bodies will die one day but we will be together as soulmates until death!! Every moment, every second I spend with
+you is the most precious thing!
+
+When I realize that I made you sad — from that moment I don't know what else I can do!! I become hopeless!!
+
+Dear, I love you sooo muchhh. Please give me your hand and we can go through every outcome and every problem, everything together!!
+I love you sooo much my dear!!!
+
+Thanks for the love and care you give me, Borni 💗💗
+      </div>
+    </div>
+
+    <!-- Photo Gallery (Replace with Imgur Links) -->
+    <div class="image-row">
+      <img src="https://i.imgur.com/sYkwPmi.jpeg" alt="Her Cute Photo" />
+      <img src="https://i.imgur.com/2IrQEJ8.jpeg" alt="You Two Together" />
+      <img src="https://i.imgur.com/UyVclDc.jpeg" alt="Goofy Photo" />
+      <img src="https://i.imgur.com/IvpTeyr.jpeg" alt="Holding Hands" />
+    </div>
+
+    <!-- Kiss Button -->
+    <button class="kiss-btn" onclick="showKiss()">Send a Virtual Kiss! 💋</button>
+    <div class="kiss-message" id="kissMessage">Mwah! 💘</div>
+
+    <div class="footer">
+      Made with all my heart, just for you 💓
+    </div>
+  </div>
+
+  <script>
+    // Password Check
+    function checkPassword() {
+      const password = "TahsinLovesyou";
+      const input = document.getElementById("passwordInput").value;
+      if (input === password) {
+        document.getElementById("passwordScreen").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+        createHearts();
+      } else {
+        alert("Wrong password Honey!");
+      }
+    }
+
+    // Floating Hearts
+    function createHearts() {
+      const heartsContainer = document.getElementById("hearts");
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = (Math.random() * 5 + 5) + "s";
+        heart.style.opacity = Math.random() * 0.6 + 0.4;
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        heartsContainer.appendChild(heart);
+      }
+    }
+
+    // Kiss Button
+    function showKiss() {
+      const kissMessage = document.getElementById("kissMessage");
+      kissMessage.style.opacity = "1";
+      setTimeout(() => {
+        kissMessage.style.opacity = "0";
+      }, 2000);
+    }
+
+    // Allow pressing Enter to submit password
+    document.getElementById("passwordInput").addEventListener("keyup", function(event) {
+      if (event.key === "Enter") {
+        checkPassword();
+      }
+    });
+  </script>
+</body>
+</html>
